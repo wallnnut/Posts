@@ -1,15 +1,12 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
+import { IComment } from "../types";
 
-const Comment = () => {
+const Comment = ({ comment }: { comment: IComment }) => {
 	return (
 		<>
 			<div>
-				<p>Email</p>
-				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					Voluptas placeat dolorum nobis architecto. Quidem, dolore?
-				</p>
+				<p>{comment.email}</p>
+				<p>{comment.body}</p>
 			</div>
 		</>
 	);

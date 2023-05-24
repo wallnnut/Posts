@@ -1,13 +1,37 @@
 import React from "react";
 import Comment from "./Comment";
-const Comments = () => {
-	const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+import { IComment } from "../types";
+import { useSelector } from "react-redux";
+import Spinner from "react-bootstrap/Spinner";
+
+interface ICommentList {
+	commentsList: [IComment];
+	postID: number;
+}
+
+const Comments: React.FC<ICommentList> = ({ commentsList, postID }) => {
+	const commentsLoaded = useSelector(
+		(store: any) => store.commentReducer.commentsLoaded
+	);
 	return (
 		<>
-			{array.map((el) => (
+			{commentsList.map((comment) => (
 				<>
-					<Comment />
-					<hr />
+					{comment.postId === postID && (
+						<>
+							{commentsLoaded ? (
+								<>
+									<Comment
+										key={comment.id}
+										comment={comment}
+									/>
+									<hr />
+								</>
+							) : (
+								<Spinner />
+							)}
+						</>
+					)}
 				</>
 			))}
 		</>

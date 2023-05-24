@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import NavProfile from "./NavProfile";
+import { posts } from "../api/posts";
 
 const NavBar = () => {
 	return (
