@@ -1,9 +1,9 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import { Stack } from "react-bootstrap";
-import Post from "./Post";
+import Post from "./components/Post";
 import { useSelector } from "react-redux";
-import { IPost } from "../types";
+import { IPost } from "../../types";
 import Spinner from "react-bootstrap/Spinner";
 
 const PostList = () => {
@@ -20,12 +20,15 @@ const PostList = () => {
 						direction="horizontal"
 						gap={3}
 					>
+						<h2>Список постов</h2>
 						{posts.map((post: IPost) => (
 							<Post
 								key={post.id}
 								title={post.title}
 								text={post.body}
 								postID={post.id}
+								userID={post.id}
+								avatar={true}
 							/>
 						))}
 					</Stack>

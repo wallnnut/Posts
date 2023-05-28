@@ -1,5 +1,12 @@
-import { IComment, IPost } from "../../types";
-import { GET_COMMENTS, GET_POSTS, SET_COMMENTS, SET_POSTS } from "../constants";
+import { IComment, IPost, IUser } from "../../types";
+import {
+	GET_COMMENTS,
+	GET_POSTS,
+	SET_COMMENTS,
+	SET_POSTS,
+	GET_USER,
+	SET_USER,
+} from "../constants";
 // POSTS
 export const getPosts = () => {
 	return {
@@ -25,6 +32,21 @@ export const getComments = (id: number) => {
 export const setComments = (data: [IComment]) => {
 	return {
 		type: SET_COMMENTS,
+		payload: data,
+	};
+};
+
+// USER
+
+export const getUser = (id: number) => {
+	return {
+		type: GET_USER,
+		id,
+	};
+};
+export const setUser = (data: [IUser]) => {
+	return {
+		type: SET_USER,
 		payload: data,
 	};
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import Comment from "./Comment";
-import { IComment } from "../types";
+import Comment from "./components/Comment";
+import { IComment } from "../../types";
 import { useSelector } from "react-redux";
 import Spinner from "react-bootstrap/Spinner";
 

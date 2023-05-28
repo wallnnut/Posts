@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Comments from "./CommentsList";
+import Comments from "../../commentList/CommentsList";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getComments } from "../redux/actions";
+import { getComments, getUser } from "../../../redux/actions";
 import Spinner from "react-bootstrap/Spinner";
 
 interface Ipost {
 	title: string;
 	text: string;
 	postID: number;
+	userID: number;
+	avatar: boolean;
 }
 
-const Post: React.FC<Ipost> = ({ title, text, postID }) => {
+const Post: React.FC<Ipost> = ({ title, text, postID, userID, avatar }) => {
 	const [showComment, setShowComment] = useState(false);
 
 	const dispatch = useDispatch();
@@ -26,6 +28,7 @@ const Post: React.FC<Ipost> = ({ title, text, postID }) => {
 	const commentsLoaded = useSelector(
 		(store: any) => store.commentReducer.commentsLoaded
 	);
+
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		if (!showComment) {
@@ -35,11 +38,18 @@ const Post: React.FC<Ipost> = ({ title, text, postID }) => {
 	};
 
 	return (
-		<Card style={{ width: "45rem" }}>
-			<Link to="/user">
+		<Card style={{ margin: "0 auto", width: "35rem" }}>
+			<Link
+				onClick={() => dispatch(getUser(userID))}
+				to={`/about/${userID}`}
+			>
 				<Card.Img
 					variant="top"
-					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnCZNByODqj86H1gM8R6DzxYOp2-X9Z87B8WBEkjlr1FyW9eSDBPvMfUHsJy-Z5Z5PiIc&usqp=CAU"
+					src={
+						avatar
+							? "https://upload.wikimedia.org/wikipedia/commons/8/87/Avatar_poe84it.png"
+							: ""
+					}
 				/>
 			</Link>
 			<Card.Body>
@@ -53,7 +63,7 @@ const Post: React.FC<Ipost> = ({ title, text, postID }) => {
 								animation="grow"
 								size="sm"
 								role="status"
-								// aria-hidden="true"
+								aria-hidden="true"
 							/>
 							Загрузка...
 						</Button>
