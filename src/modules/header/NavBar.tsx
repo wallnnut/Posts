@@ -12,14 +12,25 @@ const NavBar = () => {
 			<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
 				<Container>
 					<Navbar.Brand>
-						<Link to="/">Список постов</Link>
+						<Link
+							style={{ textDecoration: "none", color: "#fff" }}
+							to="/"
+						>
+							Список постов
+						</Link>
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					<Navbar.Collapse id="responsive-navbar-nav">
 						<Nav className="me-auto">
-							<Nav.Link>
-								<Link to="/about">Обо мне</Link>
-							</Nav.Link>
+							<Link
+								style={{
+									textDecoration: "none",
+									color: "#fff",
+								}}
+								to="/about/me"
+							>
+								Обо мне
+							</Link>
 						</Nav>
 						<Nav>
 							<NavProfile />

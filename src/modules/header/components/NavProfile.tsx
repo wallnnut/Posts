@@ -10,7 +10,7 @@ const NavProfile = () => {
 		<Container className="d-flex flex-column align-items-center">
 			<Row className="justify-content-center">
 				<Col className="mt-2" xs={6} md={4}>
-					<Link to="/about/1423">
+					<Link to="/about/me">
 						<Figure.Image
 							width={171}
 							height={180}
@@ -23,7 +23,10 @@ const NavProfile = () => {
 			</Row>
 			<Row>
 				<Col className="d-flex flex-column align-items-center mt-2">
-					<Link to="/about/1423">
+					<Link
+						style={{ textDecoration: "none", color: "#fff" }}
+						to="/about/me"
+					>
 						<p className=" fs-6 text-white">Марат</p>
 					</Link>
 

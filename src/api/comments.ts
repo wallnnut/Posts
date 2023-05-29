@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const comments = {
 	get: async (id: number) => {
 		const { data } = await axios.get(

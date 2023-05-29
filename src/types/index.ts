@@ -13,7 +13,7 @@ export interface IPost {
 }
 export interface IAction {
 	type: string;
-	payload: [IPost] | [IComment];
+	payload: IPost[] | IComment[];
 }
 
 export interface IInitialState {

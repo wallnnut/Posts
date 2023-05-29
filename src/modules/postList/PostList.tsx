@@ -27,7 +27,7 @@ const PostList = () => {
 								title={post.title}
 								text={post.body}
 								postID={post.id}
-								userID={post.id}
+								userID={post.userId}
 								avatar={true}
 							/>
 						))}
