@@ -2,11 +2,13 @@ import axios from "axios";
 import { IUser } from "../types";
 
 export const user = {
-	get: async (id: number) => {
-		const { data } = await axios.get(
-			`https://jsonplaceholder.typicode.com/users?id=${id}`
+	get: async (id: number): Promise<IUser | {}> => {
+		const { data }: { data: IUser[] } = await axios.get(
+			`https://tsonplaceholder.typicode.com/users?id=${id}`
 		);
 		const user = data.find((el: IUser) => el);
-		return user;
+		if (user) {
+			return user;
+		} else return {};
 	},
 };

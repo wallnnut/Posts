@@ -10,15 +10,7 @@ export interface IPost {
 	id: number;
 	title: string;
 	body: string;
-}
-export interface IAction {
-	type: string;
-	payload: IPost[] | IComment[];
-}
-
-export interface IInitialState {
-	posts: [] | [IPost];
-	comments: [] | [IComment];
+	commentsLoading?: boolean;
 }
 
 export interface IUser {
@@ -43,4 +35,33 @@ export interface IUser {
 		catchPhrase: string;
 		bs: string;
 	};
+}
+
+export type TError = {
+	message: string;
+	id: number;
+};
+
+export interface ICommentState {
+	comments: [] | IComment[];
+	commentsLoaded: boolean;
+	isLoading: boolean;
+	error: TError | null;
+}
+export interface IPostState {
+	posts: [] | IPost[];
+	postLoaded: boolean;
+	error: string | null;
+}
+export interface IUserState {
+	user: IUser | {};
+	userLoaded: boolean;
+	isLoading: boolean;
+	error: null;
+}
+
+export interface IStore {
+	commentReducer: ICommentState;
+	postReducer: IPostState;
+	userReducer: IUserState;
 }

@@ -1,3 +1,4 @@
+import { IUserState } from "./../types/index";
 import { IUser } from "../types";
 import { user } from "../api/user";
 import { put, call, takeEvery } from "redux-saga/effects";
@@ -5,10 +6,14 @@ import { put, call, takeEvery } from "redux-saga/effects";
 // ==============================CONSTANTS=================================
 export const GET_USER = "GET_USER" as const;
 export const SET_USER = "SET_USER" as const;
+export const SET_USER_ERROR = "SET_USER_ERROR" as const;
 
 // ==============================ACTIONS===================================
 
-type userActionTypes = ReturnType<typeof getUser> | ReturnType<typeof setUser>;
+type userActionTypes =
+	| ReturnType<typeof getUser>
+	| ReturnType<typeof setUser>
+	| ReturnType<typeof setUserError>;
 
 export const getUser = (id: number) =>
 	({
@@ -16,28 +21,27 @@ export const getUser = (id: number) =>
 		payload: id,
 	} as const);
 
-export const setUser = (data: IUser[]) =>
+export const setUser = (data: IUser) =>
 	({
 		type: SET_USER,
 		payload: data,
 	} as const);
+export const setUserError = (error: string) =>
+	({
+		type: SET_USER_ERROR,
+		payload: error,
+	} as const);
 
 // ================================REDUCERS=============================
-
-interface IState {
-	user: IUser | object;
-	userLoaded: boolean;
-	isLoading: boolean;
-}
-
-export const initialState: IState = {
+export const initialState: IUserState = {
 	user: {},
 	userLoaded: false,
 	isLoading: false,
+	error: null,
 };
 
 const userInfo = (
-	state: IState = initialState,
+	state: IUserState = initialState,
 	{ type, payload }: userActionTypes
 ) => {
 	switch (type) {
@@ -50,6 +54,14 @@ const userInfo = (
 				userLoaded: true,
 				isLoading: false,
 			};
+		case SET_USER_ERROR: {
+			return {
+				...state,
+				error: payload,
+				isLoading: false,
+				userLoaded: true,
+			};
+		}
 		default:
 			return state;
 	}
@@ -62,10 +74,15 @@ export default userInfo;
 const delay = (s: number) => new Promise((res) => setTimeout(res, s * 1000));
 
 export function* userWorker(action: any): any {
-	console.log(action);
-	const data = yield call(user.get, action.id);
-	yield delay(1);
-	yield put(setUser(data));
+	try {
+		const data = yield call(user.get, action.payload);
+		yield delay(1);
+		yield put(setUser(data));
+	} catch (error) {
+		yield put(
+			setUserError("There is a problem with fetching user. Try later.")
+		);
+	}
 }
 
 export function* userWatcher(): any {

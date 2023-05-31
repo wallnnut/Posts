@@ -15,7 +15,7 @@ const NavProfile = () => {
 							width={171}
 							height={180}
 							alt="171x180"
-							src="2.jpg"
+							src={require("../../../images/2.jpg")}
 							roundedCircle
 						/>
 					</Link>

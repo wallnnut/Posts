@@ -9,6 +9,7 @@ import { getUser } from "../../../redux/users";
 import Spinner from "react-bootstrap/Spinner";
 import { IComment } from "../../../types";
 import Image from "react-bootstrap/Image";
+import Alert from "react-bootstrap/Alert";
 
 interface Ipost {
 	title: string;
@@ -17,6 +18,8 @@ interface Ipost {
 	userID: number;
 	avatar: boolean;
 	width?: number;
+	isLoading?: boolean;
+	error?: string | boolean;
 }
 
 const Post: React.FC<Ipost> = ({
@@ -26,13 +29,13 @@ const Post: React.FC<Ipost> = ({
 	userID,
 	avatar,
 	width,
+	isLoading,
+	error,
 }) => {
 	const [showComment, setShowComment] = useState(false);
 
 	const dispatch = useDispatch();
-	const isLoading = useSelector(
-		(store: any) => store?.commentReducer?.isLoading
-	);
+
 	const commentsList: IComment[] = useSelector(
 		(store: any) => store.commentReducer.comments
 	);
@@ -64,7 +67,7 @@ const Post: React.FC<Ipost> = ({
 						src={
 							avatar
 								? "https://upload.wikimedia.org/wikipedia/commons/8/87/Avatar_poe84it.png"
-								: "2.jpg"
+								: require("../../../images/2.jpg")
 						}
 						style={{
 							width: "100px",
@@ -78,7 +81,7 @@ const Post: React.FC<Ipost> = ({
 				<Card.Title className="text-warning fs-3"> {title}</Card.Title>
 				<Card.Text>{text}</Card.Text>
 				<>
-					{isLoading && postID ? (
+					{isLoading ? (
 						<Button variant="primary" disabled>
 							<Spinner
 								as="span"
@@ -93,6 +96,11 @@ const Post: React.FC<Ipost> = ({
 						<Button onClick={handleClick} variant="primary">
 							Коментарии
 						</Button>
+					)}
+					{error && (
+						<Alert className="mt-3" variant="danger">
+							{error}
+						</Alert>
 					)}
 				</>
 
